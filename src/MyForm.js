@@ -1,7 +1,23 @@
 import React from "react";
 import { Formik, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-// import { Debug } from './Debug';
+import {
+  Row,
+  Col,
+  Card,
+  CardBody,
+  CardHeader,
+  CardFooter,
+  UncontrolledAlert,
+  FormGroup,
+  Input,
+  Label,
+  FormText,
+  CustomInput,
+  Badge,
+  Button,
+  ButtonGroup,
+  Collapse
+} from "reactstrap";
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -60,11 +76,6 @@ class Wizard extends React.Component {
         enableReinitialize={false}
         validate={this.validate}
         onSubmit={this.handleSubmit}
-        validationSchema={Yup.object().shape({
-          email: Yup.string()
-            .email()
-            .required('Required'),
-        })}
         render={({ values, handleSubmit, isSubmitting, handleReset }) => (
           <form onSubmit={handleSubmit}>
             {activePage}
@@ -95,7 +106,7 @@ class Wizard extends React.Component {
   }
 }
 
-const App = () => (
+export const App = () => (
   <div className="App">
     <h1>Multistep / Form Wizard </h1>
     <Wizard
