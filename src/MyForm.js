@@ -1,5 +1,6 @@
 import React from "react";
 import { Formik, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import {
   Row,
   Col,
@@ -65,6 +66,18 @@ class Wizard extends React.Component {
     }
   };
 
+
+  Step1Schema = Yup.object().shape({
+    firstName: Yup.string().required("First Name Is Required"),
+    lastName: Yup.string().required("Last Name Is Required")
+  });
+  Step2Schema = Yup.object().shape({
+    email: Yup.string().required("Email Is Required"),
+    favoriteColor: Yup.string().required("Favorite color required")
+  });
+
+  schemaArray = [this.Step1Schema, this.Step2Schema];
+
   render() {
     const { children } = this.props;
     const { page, values } = this.state;
@@ -74,7 +87,8 @@ class Wizard extends React.Component {
       <Formik
         initialValues={values}
         enableReinitialize={false}
-        validate={this.validate}
+        // validate={this.validate}
+        validationSchema={this.schemaArray[page]}
         onSubmit={this.handleSubmit}
         render={({ values, handleSubmit, isSubmitting, handleReset }) => (
           <form onSubmit={handleSubmit}>

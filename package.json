@@ -10,7 +10,7 @@
     "react-dom": "16.8.6",
     "react-scripts": "1.1.4",
     "reactstrap": "8.1.1",
-    "yup": "0.27.0"
+    "yup": "^0.27.0"
   },
   "devDependencies": {},
   "scripts": {
