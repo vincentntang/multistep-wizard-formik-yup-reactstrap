@@ -2,7 +2,6 @@ import React from "react";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 // import { Debug } from './Debug';
-// test save
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -24,7 +23,7 @@ class Wizard extends React.Component {
       page: Math.min(state.page + 1, this.props.children.length - 1),
       values
     }));
-  //test
+
   previous = () =>
     this.setState(state => ({
       page: Math.max(state.page - 1, 0)
@@ -61,6 +60,11 @@ class Wizard extends React.Component {
         enableReinitialize={false}
         validate={this.validate}
         onSubmit={this.handleSubmit}
+        validationSchema={Yup.object().shape({
+          email: Yup.string()
+            .email()
+            .required('Required'),
+        })}
         render={({ values, handleSubmit, isSubmitting, handleReset }) => (
           <form onSubmit={handleSubmit}>
             {activePage}
