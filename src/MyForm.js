@@ -1,4 +1,4 @@
-import React from "react";
+import React , {Fragment} from "react";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import classnames from 'classnames';
@@ -27,7 +27,10 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const required = value => (value ? undefined : "Required");
 
 class Wizard extends React.Component {
-  static Page = ({ children }) => children;
+  // static Page = ({ children }) => children; // properties of the class
+  static Page = ({ children, parentState }) => {
+    return children(parentState);
+  };
 
   constructor(props) {
     super(props);
@@ -85,6 +88,7 @@ class Wizard extends React.Component {
     const { children } = this.props;
     const { page, values } = this.state;
     const activePage = React.Children.toArray(children)[page];
+    console.log(activePage,"activePage");
     const isLastPage = page === React.Children.count(children) - 1;
     return (
       <Formik
@@ -100,7 +104,8 @@ class Wizard extends React.Component {
           const {handleSubmit, isSubmitting} = props;
           return (
             <form onSubmit={handleSubmit}>
-            {activePage}
+            {React.cloneElement(activePage, { parentState: { ...props } })}
+            {/* {activePage} */}
             <div className="buttons">
               {page > 0 && (
                 <button
@@ -219,8 +224,31 @@ const initialValues = {
 
 const schemaArray = [Step1Schema,Step2Schema];
 
+// const formikEnhancer = withFormik({
+//   validationSchema: Yup.object().shape({
+//     firstName: Yup.string()
+//       .min(2, "C'mon, your name is longer than that")
+//       .required('First name is required.'),
+//     lastName: Yup.string()
+//       .min(2, "C'mon, your name is longer than that")
+//       .required('Last name is required.'),
+//     email: Yup.string()
+//       .email('Invalid email address')
+//       .required('Email is required!'),
+//   }),
+
+//   mapPropsToValues: ({ user }) => ({
+//     ...user,
+//   }),
+//   handleSubmit: (payload, { setSubmitting }) => {
+//     alert(payload.email);
+//     setSubmitting(false);
+//   },
+//   displayName: 'MyForm',
+// });
+
+
 export const App = () => {
-  // console.log(props, "this.props")
   return (
   <div className="App">
     <h1>Multistep / Form Wizard </h1>
@@ -241,6 +269,8 @@ export const App = () => {
       }}
     >
       <Wizard.Page>
+        {props => (
+          <Fragment>
         <div>
           {/* <label>First Name</label> */}
           <Row>
@@ -317,6 +347,8 @@ export const App = () => {
             className="field-error"
           />
         </div>
+        </Fragment>
+        )}
       </Wizard.Page>
       <Wizard.Page
         validate={values => {
@@ -330,6 +362,8 @@ export const App = () => {
           return errors;
         }}
       >
+      {props => (
+          <Fragment>
         <div>
           <label>Email</label>
           <Field
@@ -354,6 +388,8 @@ export const App = () => {
             className="field-error"
           />
         </div>
+        </Fragment>
+        )}
       </Wizard.Page>
     </Wizard>
   </div>
