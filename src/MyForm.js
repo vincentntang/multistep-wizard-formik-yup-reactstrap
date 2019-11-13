@@ -218,6 +218,7 @@ const Step1Schema = Yup.object().shape({
   firstName: Yup.string().required("First Name Is Required"),
   middleName: Yup.string().required("Middle Name Is Required"),
   lastName: Yup.string().required("Last Name Is Required"),
+  sirName: Yup.string().required("Sir Name Is Required")
 });
 const Step2Schema = Yup.object().shape({
   email: Yup.string().required("Email Is Required"),
@@ -227,6 +228,7 @@ const initialValues = {
   firstName: "",
   middleName: "", // must add
   lastName: "",
+  sirName: '',
   email: "",
   favoriteColor: "",
 };
@@ -277,7 +279,9 @@ export const App = () => {
         }}
       >
         <Wizard.Page>
-          {props =>
+          {props => {
+            console.log(props, "this props 1")
+            return (
             <Fragment>
               <div>
                 {/* <label>First Name</label> */}
@@ -318,16 +322,16 @@ export const App = () => {
                   </Col>
                   <Col xs={{ size: 6, offset: 3 }}>
                     <FormGroup>
-                      {/* <TextInput
-                  id="firstName"
-                  type="text"
-                  label="First Name"
-                  placeholder="John"
-                  error={touched.firstName && errors.firstName}
-                  value={values.firstName}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                /> */}
+                      <TextInput
+                        id="sirName"
+                        type="text"
+                        label="Sir Name"
+                        placeholder="John"
+                        error={props.touched.sirName && props.errors.sirName}
+                        value={props.values.sirName}
+                        onChange={props.handleChange}
+                        onBlur={props.handleBlur}
+                      />
                     </FormGroup>
                   </Col>
                 </Row>
@@ -354,7 +358,8 @@ export const App = () => {
                   className="field-error"
                 />
               </div>
-            </Fragment>}
+            </Fragment>)}
+          }
         </Wizard.Page>
         <Wizard.Page
           validate={values => {
@@ -368,8 +373,9 @@ export const App = () => {
             return errors;
           }}
         >
-          {props =>
-            <Fragment>
+          {props => {
+            console.log(props,"this props last");
+            return (<Fragment>
               <div>
                 <label>Email</label>
                 <Field
@@ -398,7 +404,9 @@ export const App = () => {
                   className="field-error"
                 />
               </div>
-            </Fragment>}
+            </Fragment>)
+            }
+          }
         </Wizard.Page>
       </Wizard>
     </div>
