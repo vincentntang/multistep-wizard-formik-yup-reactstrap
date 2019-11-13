@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardFooter,
   UncontrolledAlert,
+  Form,
   FormGroup,
   Input,
   Label,
@@ -139,19 +140,36 @@ export const App = () => (
     >
       <Wizard.Page>
         <div>
-          <label>First Name</label>
-          <Field
+          {/* <label>First Name</label> */}
+          <Form>
+          <Row>
+            <Col xs={{ size: 6, offset: 3 }}>
+              <FormGroup>
+                <Label for="exampleEmail">Email</Label>
+                <Input
+                  tag={Field}
+                  name="firstName"
+                  component="input"
+                  type="text"
+                  placeholder="First Name"
+                />
+                <ErrorMessage
+                  name="firstName"
+                  component="div"
+                  className="field-error"
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          </Form>
+          {/* <Field
             name="firstName"
             component="input"
             type="text"
             placeholder="First Name"
             validate={required}
-          />
-          <ErrorMessage
-            name="firstName"
-            component="div"
-            className="field-error"
-          />
+          /> */}
+   
         </div>
         <div>
           <label>Last Name</label>

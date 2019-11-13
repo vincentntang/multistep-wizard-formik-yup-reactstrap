@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import MyForm from "./MyForm";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import "./styles.css";
 
