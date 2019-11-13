@@ -88,14 +88,18 @@ class Wizard extends React.Component {
     const isLastPage = page === React.Children.count(children) - 1;
     return (
       <Formik
-        initialValues={values}
-        enableReinitialize={false}
-        // validate={this.validate}
-        // validationSchema={this.schemaArray[page]}
-        validationSchema={schemaArray[page]}
-        onSubmit={this.handleSubmit}
-        render={({ values, handleSubmit, isSubmitting, handleReset }) => (
-          <form onSubmit={handleSubmit}>
+      initialValues={values}
+      enableReinitialize={false}
+      // validate={this.validate}
+      // validationSchema={this.schemaArray[page]}
+      validationSchema={schemaArray[page]}
+      onSubmit={this.handleSubmit}
+      >
+        {(props) => {
+          console.log(props,"this.props")
+          const {handleSubmit, isSubmitting} = props;
+          return (
+            <form onSubmit={handleSubmit}>
             {activePage}
             <div className="buttons">
               {page > 0 && (
@@ -118,8 +122,42 @@ class Wizard extends React.Component {
 
             {/* <Debug /> */}
           </form>
-        )}
-      />
+          )
+        }}
+      </Formik>
+      // <Formik
+      //   initialValues={values}
+      //   enableReinitialize={false}
+      //   // validate={this.validate}
+      //   // validationSchema={this.schemaArray[page]}
+      //   validationSchema={schemaArray[page]}
+      //   onSubmit={this.handleSubmit}
+      //   render={({ values, handleSubmit, isSubmitting, handleReset }) => (
+      //     <form onSubmit={handleSubmit}>
+      //       {activePage}
+      //       <div className="buttons">
+      //         {page > 0 && (
+      //           <button
+      //             type="button"
+      //             className="secondary"
+      //             onClick={this.previous}
+      //           >
+      //             « Previous
+      //           </button>
+      //         )}
+
+      //         {!isLastPage && <button type="submit">Next »</button>}
+      //         {isLastPage && (
+      //           <button type="submit" disabled={isSubmitting}>
+      //             Submit
+      //           </button>
+      //         )}
+      //       </div>
+
+      //       {/* <Debug /> */}
+      //     </form>
+      //   )}
+      // />
     );
   }
 }
