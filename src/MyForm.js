@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import classnames from 'classnames';
 import {
   Row,
   Col,
@@ -123,6 +124,43 @@ class Wizard extends React.Component {
   }
 }
 
+const InputFeedback = ({ error }) =>
+  error ? <div className="input-feedback">{error}</div> : null;
+
+const Labely = ({ error, className, children, ...props }) => {
+  return (
+    <label className="label" {...props}>
+      {children}
+    </label>
+  );
+};
+
+const TextInput = ({ type, id, label, error, value, onChange, className, ...props }) => {
+  const classes = classnames(
+    'input-group',
+    {
+      'animated shake error': !!error,
+    },
+    className
+  );
+  return (
+    <div className={classes}>
+      <Labely htmlFor={id} error={error}>
+        {label}
+      </Labely>
+      <input
+        id={id}
+        className="text-input"
+        type={type}
+        value={value}
+        onChange={onChange}
+        {...props}
+      />
+      <InputFeedback error={error} />
+    </div>
+  );
+};
+
 
 const Step1Schema = Yup.object().shape({
   firstName: Yup.string().required("First Name Is Required"),
@@ -143,7 +181,9 @@ const initialValues = {
 
 const schemaArray = [Step1Schema,Step2Schema];
 
-export const App = () => (
+export const App = () => {
+  // console.log(props, "this.props")
+  return (
   <div className="App">
     <h1>Multistep / Form Wizard </h1>
     <Wizard
@@ -198,6 +238,20 @@ export const App = () => (
                   component="div"
                   className="field-error"
                 />
+              </FormGroup>
+            </Col>
+            <Col xs={{ size: 6, offset: 3 }}>
+              <FormGroup>
+                {/* <TextInput
+                  id="firstName"
+                  type="text"
+                  label="First Name"
+                  placeholder="John"
+                  error={touched.firstName && errors.firstName}
+                  value={values.firstName}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                /> */}
               </FormGroup>
             </Col>
           </Row>
@@ -265,6 +319,7 @@ export const App = () => (
       </Wizard.Page>
     </Wizard>
   </div>
-);
+  );
+};
 
 export default App;
