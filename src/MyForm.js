@@ -1,7 +1,7 @@
-import React , {Fragment} from "react";
+import React, { Fragment } from "react";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import classnames from 'classnames';
+import classnames from "classnames";
 import {
   Row,
   Col,
@@ -19,7 +19,7 @@ import {
   Badge,
   Button,
   ButtonGroup,
-  Collapse
+  Collapse,
 } from "reactstrap";
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -36,19 +36,19 @@ class Wizard extends React.Component {
     super(props);
     this.state = {
       page: 0,
-      values: props.initialValues
+      values: props.initialValues,
     };
   }
 
   next = values =>
     this.setState(state => ({
       page: Math.min(state.page + 1, this.props.children.length - 1),
-      values
+      values,
     }));
 
   previous = () =>
     this.setState(state => ({
-      page: Math.max(state.page - 1, 0)
+      page: Math.max(state.page - 1, 0),
     }));
 
   validate = values => {
@@ -71,7 +71,6 @@ class Wizard extends React.Component {
     }
   };
 
-
   // Step1Schema = Yup.object().shape({
   //   firstName: Yup.string().required("First Name Is Required"),
   //   middleName: Yup.string().required("Middle Name Is Required"),
@@ -88,46 +87,44 @@ class Wizard extends React.Component {
     const { children } = this.props;
     const { page, values } = this.state;
     const activePage = React.Children.toArray(children)[page];
-    console.log(activePage,"activePage");
+    console.log(activePage, "activePage");
     const isLastPage = page === React.Children.count(children) - 1;
     return (
       <Formik
-      initialValues={values}
-      enableReinitialize={false}
-      // validate={this.validate}
-      // validationSchema={this.schemaArray[page]}
-      validationSchema={schemaArray[page]}
-      onSubmit={this.handleSubmit}
+        initialValues={values}
+        enableReinitialize={false}
+        // validate={this.validate}
+        // validationSchema={this.schemaArray[page]}
+        validationSchema={schemaArray[page]}
+        onSubmit={this.handleSubmit}
       >
-        {(props) => {
-          console.log(props,"this.props")
-          const {handleSubmit, isSubmitting} = props;
+        {props => {
+          console.log(props, "this.props");
+          const { handleSubmit, isSubmitting } = props;
           return (
             <form onSubmit={handleSubmit}>
-            {React.cloneElement(activePage, { parentState: { ...props } })}
-            {/* {activePage} */}
-            <div className="buttons">
-              {page > 0 && (
-                <button
-                  type="button"
-                  className="secondary"
-                  onClick={this.previous}
-                >
-                  « Previous
-                </button>
-              )}
+              {React.cloneElement(activePage, { parentState: { ...props } })}
+              {/* {activePage} */}
+              <div className="buttons">
+                {page > 0 &&
+                  <button
+                    type="button"
+                    className="secondary"
+                    onClick={this.previous}
+                  >
+                    « Previous
+                  </button>}
 
-              {!isLastPage && <button type="submit">Next »</button>}
-              {isLastPage && (
-                <button type="submit" disabled={isSubmitting}>
-                  Submit
-                </button>
-              )}
-            </div>
+                {!isLastPage && <button type="submit">Next »</button>}
+                {isLastPage &&
+                  <button type="submit" disabled={isSubmitting}>
+                    Submit
+                  </button>}
+              </div>
 
-            {/* <Debug /> */}
-          </form>
-          )
+              {/* <Debug /> */}
+            </form>
+          );
         }}
       </Formik>
       // <Formik
@@ -168,7 +165,11 @@ class Wizard extends React.Component {
 }
 
 const InputFeedback = ({ error }) =>
-  error ? <div className="input-feedback">{error}</div> : null;
+  error
+    ? <div className="input-feedback">
+        {error}
+      </div>
+    : null;
 
 const Labely = ({ error, className, children, ...props }) => {
   return (
@@ -178,13 +179,22 @@ const Labely = ({ error, className, children, ...props }) => {
   );
 };
 
-const TextInput = ({ type, id, label, error, value, onChange, className, ...props }) => {
+const TextInput = ({
+  type,
+  id,
+  label,
+  error,
+  value,
+  onChange,
+  className,
+  ...props
+}) => {
   const classes = classnames(
-    'input-group',
+    "input-group",
     {
-      'animated shake error': !!error,
+      "animated shake error": !!error,
     },
-    className
+    className,
   );
   return (
     <div className={classes}>
@@ -204,25 +214,24 @@ const TextInput = ({ type, id, label, error, value, onChange, className, ...prop
   );
 };
 
-
 const Step1Schema = Yup.object().shape({
   firstName: Yup.string().required("First Name Is Required"),
   middleName: Yup.string().required("Middle Name Is Required"),
-  lastName: Yup.string().required("Last Name Is Required")
+  lastName: Yup.string().required("Last Name Is Required"),
 });
 const Step2Schema = Yup.object().shape({
   email: Yup.string().required("Email Is Required"),
-  favoriteColor: Yup.string().required("Favorite color required")
+  favoriteColor: Yup.string().required("Favorite color required"),
 });
 const initialValues = {
   firstName: "",
-  middleName:'',// must add
+  middleName: "", // must add
   lastName: "",
   email: "",
-  favoriteColor: ""
-}
+  favoriteColor: "",
+};
 
-const schemaArray = [Step1Schema,Step2Schema];
+const schemaArray = [Step1Schema, Step2Schema];
 
 // const formikEnhancer = withFormik({
 //   validationSchema: Yup.object().shape({
@@ -247,70 +256,69 @@ const schemaArray = [Step1Schema,Step2Schema];
 //   displayName: 'MyForm',
 // });
 
-
 export const App = () => {
   return (
-  <div className="App">
-    <h1>Multistep / Form Wizard </h1>
-    <Wizard
-      initialValues={initialValues}
-      // initialValues={{
-      //   firstName: "",
-      //   middleName:'',// must add
-      //   lastName: "",
-      //   email: "",
-      //   favoriteColor: ""
-      // }}
-      onSubmit={(values, actions) => {
-        sleep(300).then(() => {
-          window.alert(JSON.stringify(values, null, 2));
-          actions.setSubmitting(false);
-        });
-      }}
-    >
-      <Wizard.Page>
-        {props => (
-          <Fragment>
-        <div>
-          {/* <label>First Name</label> */}
-          <Row>
-            <Col xs={{ size: 6, offset: 3 }}>
-              <FormGroup>
-                <Label for="exampleEmail">First Name</Label>
-                <Input
-                  tag={Field}
-                  name="firstName"
-                  component="input"
-                  type="text"
-                  placeholder="First Name"
-                />
-                <ErrorMessage
-                  name="firstName"
-                  component="div"
-                  className="field-error"
-                />
-              </FormGroup>
-            </Col>
-            <Col xs={{ size: 6, offset: 3 }}>
-              <FormGroup>
-                <Label for="exampleMiddle">Middle Name</Label>
-                <Input
-                  tag={Field}
-                  name="middleName"
-                  component="input"
-                  type="text"
-                  placeholder="Middle Name"
-                />
-                <ErrorMessage
-                  name="middleName"
-                  component="div"
-                  className="field-error"
-                />
-              </FormGroup>
-            </Col>
-            <Col xs={{ size: 6, offset: 3 }}>
-              <FormGroup>
-                {/* <TextInput
+    <div className="App">
+      <h1>Multistep / Form Wizard </h1>
+      <Wizard
+        initialValues={initialValues}
+        // initialValues={{
+        //   firstName: "",
+        //   middleName:'',// must add
+        //   lastName: "",
+        //   email: "",
+        //   favoriteColor: ""
+        // }}
+        onSubmit={(values, actions) => {
+          sleep(300).then(() => {
+            window.alert(JSON.stringify(values, null, 2));
+            actions.setSubmitting(false);
+          });
+        }}
+      >
+        <Wizard.Page>
+          {props =>
+            <Fragment>
+              <div>
+                {/* <label>First Name</label> */}
+                <Row>
+                  <Col xs={{ size: 6, offset: 3 }}>
+                    <FormGroup>
+                      <Label for="exampleEmail">First Name</Label>
+                      <Input
+                        tag={Field}
+                        name="firstName"
+                        component="input"
+                        type="text"
+                        placeholder="First Name"
+                      />
+                      <ErrorMessage
+                        name="firstName"
+                        component="div"
+                        className="field-error"
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col xs={{ size: 6, offset: 3 }}>
+                    <FormGroup>
+                      <Label for="exampleMiddle">Middle Name</Label>
+                      <Input
+                        tag={Field}
+                        name="middleName"
+                        component="input"
+                        type="text"
+                        placeholder="Middle Name"
+                      />
+                      <ErrorMessage
+                        name="middleName"
+                        component="div"
+                        className="field-error"
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col xs={{ size: 6, offset: 3 }}>
+                    <FormGroup>
+                      {/* <TextInput
                   id="firstName"
                   type="text"
                   label="First Name"
@@ -320,79 +328,80 @@ export const App = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 /> */}
-              </FormGroup>
-            </Col>
-          </Row>
-          {/* <Field
+                    </FormGroup>
+                  </Col>
+                </Row>
+                {/* <Field
             name="firstName"
             component="input"
             type="text"
             placeholder="First Name"
             validate={required}
           /> */}
-   
-        </div>
-        <div>
-          <label>Last Name</label>
-          <Field
-            name="lastName"
-            component="input"
-            type="text"
-            placeholder="Last Name"
-            validate={required}
-          />
-          <ErrorMessage
-            name="lastName"
-            component="div"
-            className="field-error"
-          />
-        </div>
-        </Fragment>
-        )}
-      </Wizard.Page>
-      <Wizard.Page
-        validate={values => {
-          const errors = {};
-          if (!values.email) {
-            errors.email = "Required";
-          }
-          if (!values.favoriteColor) {
-            errors.favoriteColor = "Required";
-          }
-          return errors;
-        }}
-      >
-      {props => (
-          <Fragment>
-        <div>
-          <label>Email</label>
-          <Field
-            name="email"
-            component="input"
-            type="email"
-            placeholder="Email"
-          />
-          <ErrorMessage name="email" component="div" className="field-error" />
-        </div>
-        <div>
-          <label>Favorite Color</label>
-          <Field name="favoriteColor" component="select">
-            <option value="">Select a Color</option>
-            <option value="#ff0000">❤️ Red</option>
-            <option value="#00ff00">💚 Green</option>
-            <option value="#0000ff">💙 Blue</option>
-          </Field>
-          <ErrorMessage
-            name="favoriteColor"
-            component="div"
-            className="field-error"
-          />
-        </div>
-        </Fragment>
-        )}
-      </Wizard.Page>
-    </Wizard>
-  </div>
+              </div>
+              <div>
+                <label>Last Name</label>
+                <Field
+                  name="lastName"
+                  component="input"
+                  type="text"
+                  placeholder="Last Name"
+                  validate={required}
+                />
+                <ErrorMessage
+                  name="lastName"
+                  component="div"
+                  className="field-error"
+                />
+              </div>
+            </Fragment>}
+        </Wizard.Page>
+        <Wizard.Page
+          validate={values => {
+            const errors = {};
+            if (!values.email) {
+              errors.email = "Required";
+            }
+            if (!values.favoriteColor) {
+              errors.favoriteColor = "Required";
+            }
+            return errors;
+          }}
+        >
+          {props =>
+            <Fragment>
+              <div>
+                <label>Email</label>
+                <Field
+                  name="email"
+                  component="input"
+                  type="email"
+                  placeholder="Email"
+                />
+                <ErrorMessage
+                  name="email"
+                  component="div"
+                  className="field-error"
+                />
+              </div>
+              <div>
+                <label>Favorite Color</label>
+                <Field name="favoriteColor" component="select">
+                  <option value="">Select a Color</option>
+                  <option value="#ff0000">❤️ Red</option>
+                  <option value="#00ff00">💚 Green</option>
+                  <option value="#0000ff">💙 Blue</option>
+                </Field>
+                <ErrorMessage
+                  name="favoriteColor"
+                  component="div"
+                  className="field-error"
+                />
+              </div>
+            </Fragment>}
+        </Wizard.Page>
+      </Wizard>
+    </div>
   );
 };
 
