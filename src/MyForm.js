@@ -68,16 +68,17 @@ class Wizard extends React.Component {
   };
 
 
-  Step1Schema = Yup.object().shape({
-    firstName: Yup.string().required("First Name Is Required"),
-    lastName: Yup.string().required("Last Name Is Required")
-  });
-  Step2Schema = Yup.object().shape({
-    email: Yup.string().required("Email Is Required"),
-    favoriteColor: Yup.string().required("Favorite color required")
-  });
+  // Step1Schema = Yup.object().shape({
+  //   firstName: Yup.string().required("First Name Is Required"),
+  //   middleName: Yup.string().required("Middle Name Is Required"),
+  //   lastName: Yup.string().required("Last Name Is Required")
+  // });
+  // Step2Schema = Yup.object().shape({
+  //   email: Yup.string().required("Email Is Required"),
+  //   favoriteColor: Yup.string().required("Favorite color required")
+  // });
 
-  schemaArray = [this.Step1Schema, this.Step2Schema];
+  // schemaArray = [this.Step1Schema, this.Step2Schema];
 
   render() {
     const { children } = this.props;
@@ -89,7 +90,8 @@ class Wizard extends React.Component {
         initialValues={values}
         enableReinitialize={false}
         // validate={this.validate}
-        validationSchema={this.schemaArray[page]}
+        // validationSchema={this.schemaArray[page]}
+        validationSchema={schemaArray[page]}
         onSubmit={this.handleSubmit}
         render={({ values, handleSubmit, isSubmitting, handleReset }) => (
           <form onSubmit={handleSubmit}>
@@ -121,16 +123,38 @@ class Wizard extends React.Component {
   }
 }
 
+
+const Step1Schema = Yup.object().shape({
+  firstName: Yup.string().required("First Name Is Required"),
+  middleName: Yup.string().required("Middle Name Is Required"),
+  lastName: Yup.string().required("Last Name Is Required")
+});
+const Step2Schema = Yup.object().shape({
+  email: Yup.string().required("Email Is Required"),
+  favoriteColor: Yup.string().required("Favorite color required")
+});
+const initialValues = {
+  firstName: "",
+  middleName:'',// must add
+  lastName: "",
+  email: "",
+  favoriteColor: ""
+}
+
+const schemaArray = [Step1Schema,Step2Schema];
+
 export const App = () => (
   <div className="App">
     <h1>Multistep / Form Wizard </h1>
     <Wizard
-      initialValues={{
-        firstName: "",
-        lastName: "",
-        email: "",
-        favoriteColor: ""
-      }}
+      initialValues={initialValues}
+      // initialValues={{
+      //   firstName: "",
+      //   middleName:'',// must add
+      //   lastName: "",
+      //   email: "",
+      //   favoriteColor: ""
+      // }}
       onSubmit={(values, actions) => {
         sleep(300).then(() => {
           window.alert(JSON.stringify(values, null, 2));
@@ -141,11 +165,10 @@ export const App = () => (
       <Wizard.Page>
         <div>
           {/* <label>First Name</label> */}
-          <Form>
           <Row>
             <Col xs={{ size: 6, offset: 3 }}>
               <FormGroup>
-                <Label for="exampleEmail">Email</Label>
+                <Label for="exampleEmail">First Name</Label>
                 <Input
                   tag={Field}
                   name="firstName"
@@ -160,8 +183,24 @@ export const App = () => (
                 />
               </FormGroup>
             </Col>
+            <Col xs={{ size: 6, offset: 3 }}>
+              <FormGroup>
+                <Label for="exampleMiddle">Middle Name</Label>
+                <Input
+                  tag={Field}
+                  name="middleName"
+                  component="input"
+                  type="text"
+                  placeholder="Middle Name"
+                />
+                <ErrorMessage
+                  name="middleName"
+                  component="div"
+                  className="field-error"
+                />
+              </FormGroup>
+            </Col>
           </Row>
-          </Form>
           {/* <Field
             name="firstName"
             component="input"
