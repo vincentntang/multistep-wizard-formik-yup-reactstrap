@@ -2,10 +2,6 @@ import React, { Fragment } from "react";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import classnames from "classnames";
-import {AvField, AvForm} from 'availity-reactstrap-validation';
-import Select from 'react-select';
-// import 'react-select/dist/react-select.css';
-// add one commit
 
 import {
   Row,
@@ -32,7 +28,6 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const required = value => (value ? undefined : "Required");
 
 class Wizard extends React.Component {
-  // static Page = ({ children }) => children; // properties of the class
   static Page = ({ children, parentState }) => {
     return children(parentState);
   };
@@ -75,18 +70,6 @@ class Wizard extends React.Component {
       this.next(values);
     }
   };
-
-  // Step1Schema = Yup.object().shape({
-  //   firstName: Yup.string().required("First Name Is Required"),
-  //   middleName: Yup.string().required("Middle Name Is Required"),
-  //   lastName: Yup.string().required("Last Name Is Required")
-  // });
-  // Step2Schema = Yup.object().shape({
-  //   email: Yup.string().required("Email Is Required"),
-  //   favoriteColor: Yup.string().required("Favorite color required")
-  // });
-
-  // schemaArray = [this.Step1Schema, this.Step2Schema];
 
   arrayProgress = [
     {
@@ -157,39 +140,6 @@ class Wizard extends React.Component {
           );
         }}
       </Formik>
-      // <Formik
-      //   initialValues={values}
-      //   enableReinitialize={false}
-      //   // validate={this.validate}
-      //   // validationSchema={this.schemaArray[page]}
-      //   validationSchema={schemaArray[page]}
-      //   onSubmit={this.handleSubmit}
-      //   render={({ values, handleSubmit, isSubmitting, handleReset }) => (
-      //     <form onSubmit={handleSubmit}>
-      //       {activePage}
-      //       <div className="buttons">
-      //         {page > 0 && (
-      //           <button
-      //             type="button"
-      //             className="secondary"
-      //             onClick={this.previous}
-      //           >
-      //             « Previous
-      //           </button>
-      //         )}
-
-      //         {!isLastPage && <button type="submit">Next »</button>}
-      //         {isLastPage && (
-      //           <button type="submit" disabled={isSubmitting}>
-      //             Submit
-      //           </button>
-      //         )}
-      //       </div>
-
-      //       {/* <Debug /> */}
-      //     </form>
-      //   )}
-      // />
     );
   }
 }
@@ -292,14 +242,6 @@ const Step1Schema = Yup.object().shape({
   // lastName: Yup.string().required("Last Name Is Required"),
   sirName: Yup.string().required("Sir Name Is Required"),
   favoritePet: Yup.string().required('Pet is required')
-  // topics: Yup.array()
-  //     .min(3, "Pick at least 3 tags")
-  //     .of(
-  //       Yup.object().shape({
-  //         label: Yup.string().required(),
-  //         value: Yup.string().required()
-  //       })
-  //     )
 });
 const Step2Schema = Yup.object().shape({
   email: Yup.string().required("Email Is Required"),
@@ -307,7 +249,7 @@ const Step2Schema = Yup.object().shape({
 });
 const initialValues = {
   firstName: "",
-  middleName: "", // must add
+  middleName: "",
   // lastName: "",
   sirName: '',
   favoritePet:'',
@@ -317,42 +259,12 @@ const initialValues = {
 
 const schemaArray = [Step1Schema, Step2Schema];
 
-// const formikEnhancer = withFormik({
-//   validationSchema: Yup.object().shape({
-//     firstName: Yup.string()
-//       .min(2, "C'mon, your name is longer than that")
-//       .required('First name is required.'),
-//     lastName: Yup.string()
-//       .min(2, "C'mon, your name is longer than that")
-//       .required('Last name is required.'),
-//     email: Yup.string()
-//       .email('Invalid email address')
-//       .required('Email is required!'),
-//   }),
-
-//   mapPropsToValues: ({ user }) => ({
-//     ...user,
-//   }),
-//   handleSubmit: (payload, { setSubmitting }) => {
-//     alert(payload.email);
-//     setSubmitting(false);
-//   },
-//   displayName: 'MyForm',
-// });
-
 export const App = () => {
   return (
     <div className="App">
       <h1>Multistep / Form Wizard </h1>
       <Wizard
         initialValues={initialValues}
-        // initialValues={{
-        //   firstName: "",
-        //   middleName:'',// must add
-        //   lastName: "",
-        //   email: "",
-        //   favoriteColor: ""
-        // }}
         onSubmit={(values, actions) => {
           sleep(300).then(() => {
             window.alert(JSON.stringify(values, null, 2));
@@ -366,7 +278,6 @@ export const App = () => {
             return (
             <Fragment>
               <div>
-                {/* <label>First Name</label> */}
                 <Row>
                   <Col xs={{ size: 6, offset: 3 }}>
                     <FormGroup>
@@ -378,11 +289,11 @@ export const App = () => {
                         type="text"
                         placeholder="First Name"
                       />
-                      <ErrorMessage
-                        name="firstName"
-                        component="div"
-                        className="field-error"
-                      />
+                      {props.errors.firstName &&
+                      props.touched.firstName &&
+                      <div className="input-feedback">
+                        {props.errors.firstName}
+                      </div>}
                     </FormGroup>
                   </Col>
                   <Col xs={{ size: 6, offset: 3 }}>
@@ -395,11 +306,6 @@ export const App = () => {
                         type="text"
                         placeholder="Middle Name"
                       />
-                      {/* {props.errors.middleName &&
-                      props.touched.middleName &&
-                      <div className="input-feedback">
-                        {props.errors.middleName}
-                      </div>} */}
                       <ErrorMessage
                         name="middleName"
                         component="div"
@@ -422,66 +328,25 @@ export const App = () => {
                     </FormGroup>
                   </Col>
                   <Col xs={{ size: 6, offset: 3 }}>
-                  <FormGroup>
-                    {/* <Label for="exampleSelectMulti">Select Multiple</Label>
-                    <Input tag={Field} type="select" name="selectMulti" id="exampleSelectMulti" multiple>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                    </Input> */}
-                  </FormGroup>
-                  <FormGroup>
-                    <div className="dropdown-wrapper">
-                      <Label>Favorite Color</Label>
-                      <Input tag={Field} name="favoritePet" component="select">
-                        <option value="">Select a Color</option>
-                        <option value="#ff0000">❤️ Red</option>
-                        <option value="#00ff00">💚 Green</option>
-                        <option value="#0000ff">💙 Blue</option>
-                      </Input>
-                    </div>
-                    <ErrorMessage
-                      name="favoritePet"
-                      component="div"
-                      className="input-feedback"
-                    />
-                  </FormGroup>
-                    {/* <FormGroup>
-                      <MySelect
-                        value={props.values.topics}
-                        onChange={props.setFieldValue}
-                        onBlur={props.setFieldTouched}
-                        error={props.errors.topics}
-                        touched={props.touched.topics}
+                    <FormGroup>
+                      <div className="dropdown-wrapper">
+                        <Label>Favorite Color</Label>
+                        <Input tag={Field} name="favoritePet" component="select">
+                          <option value="">Select a Color</option>
+                          <option value="#ff0000">❤️ Red</option>
+                          <option value="#00ff00">💚 Green</option>
+                          <option value="#0000ff">💙 Blue</option>
+                        </Input>
+                      </div>
+                      <ErrorMessage
+                        name="favoritePet"
+                        component="div"
+                        className="input-feedback"
                       />
-                    </FormGroup> */}
+                    </FormGroup>
                   </Col>
                 </Row>
-                {/* <Field
-            name="firstName"
-            component="input"
-            type="text"
-            placeholder="First Name"
-            validate={required}
-          /> */}
               </div>
-              {/* <div>
-                <label>Last Name</label>
-                <Field
-                  name="lastName"
-                  component="input"
-                  type="text"
-                  placeholder="Last Name"
-                  validate={required}
-                />
-                <ErrorMessage
-                  name="lastName"
-                  component="div"
-                  className="field-error"
-                />
-              </div> */}
             </Fragment>)}
           }
         </Wizard.Page>
@@ -533,18 +398,6 @@ export const App = () => {
                     </FormGroup>
                   </Col>
                 </Row>
-                {/* <label>Favorite Color</label>
-                <Field name="favoriteColor" component="select">
-                  <option value="">Select a Color</option>
-                  <option value="#ff0000">❤️ Red</option>
-                  <option value="#00ff00">💚 Green</option>
-                  <option value="#0000ff">💙 Blue</option>
-                </Field>
-                <ErrorMessage
-                  name="favoriteColor"
-                  component="div"
-                  className="input-feedback"
-                /> */}
               </div>
             </Fragment>)
             }
