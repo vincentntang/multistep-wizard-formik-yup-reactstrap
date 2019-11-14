@@ -140,3 +140,14 @@ button.outline {
 .shake {
   animation-name: shake;
 }
+
+/* OTHER STUFF */
+.input-feedback {
+  color: red;
+  margin-top: .25rem;
+}
+
+.dropdown-wrapper {
+  display: flex;
+  flex-direction: column;
+}

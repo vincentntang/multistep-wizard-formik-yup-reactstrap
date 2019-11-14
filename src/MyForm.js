@@ -265,6 +265,7 @@ const Step1Schema = Yup.object().shape({
   middleName: Yup.string().required("Middle Name Is Required"),
   lastName: Yup.string().required("Last Name Is Required"),
   sirName: Yup.string().required("Sir Name Is Required"),
+  favoritePet: Yup.string().required('Pet is required')
   // topics: Yup.array()
   //     .min(3, "Pick at least 3 tags")
   //     .of(
@@ -283,6 +284,7 @@ const initialValues = {
   middleName: "", // must add
   lastName: "",
   sirName: '',
+  favoritePet:'',
   email: "",
   favoriteColor: "",
 };
@@ -367,10 +369,15 @@ export const App = () => {
                         type="text"
                         placeholder="Middle Name"
                       />
+                      {/* {props.errors.middleName &&
+                      props.touched.middleName &&
+                      <div className="input-feedback">
+                        {props.errors.middleName}
+                      </div>} */}
                       <ErrorMessage
                         name="middleName"
                         component="div"
-                        className="field-error"
+                        className="input-feedback"
                       />
                     </FormGroup>
                   </Col>
@@ -389,6 +396,32 @@ export const App = () => {
                     </FormGroup>
                   </Col>
                   <Col xs={{ size: 6, offset: 3 }}>
+                  <FormGroup>
+                    {/* <Label for="exampleSelectMulti">Select Multiple</Label>
+                    <Input tag={Field} type="select" name="selectMulti" id="exampleSelectMulti" multiple>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </Input> */}
+                  </FormGroup>
+                  <FormGroup>
+                    <div className="dropdown-wrapper">
+                      <Label>Favorite Color</Label>
+                      <Input tag={Field} name="favoritePet" component="select">
+                        <option value="">Select a Color</option>
+                        <option value="#ff0000">❤️ Red</option>
+                        <option value="#00ff00">💚 Green</option>
+                        <option value="#0000ff">💙 Blue</option>
+                      </Input>
+                    </div>
+                    <ErrorMessage
+                      name="favoritePet"
+                      component="div"
+                      className="input-feedback"
+                    />
+                  </FormGroup>
                     {/* <FormGroup>
                       <MySelect
                         value={props.values.topics}
@@ -456,7 +489,25 @@ export const App = () => {
                 />
               </div>
               <div>
-                <label>Favorite Color</label>
+                <Row>
+                  <Col xs={{ size: 6, offset: 3 }}>
+                    <FormGroup>
+                      <Label>Favorite Color</Label>
+                      <Field name="favoriteColor" component="select">
+                        <option value="">Select a Color</option>
+                        <option value="#ff0000">❤️ Red</option>
+                        <option value="#00ff00">💚 Green</option>
+                        <option value="#0000ff">💙 Blue</option>
+                      </Field>
+                      <ErrorMessage
+                        name="favoriteColor"
+                        component="div"
+                        className="input-feedback"
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
+                {/* <label>Favorite Color</label>
                 <Field name="favoriteColor" component="select">
                   <option value="">Select a Color</option>
                   <option value="#ff0000">❤️ Red</option>
@@ -466,8 +517,8 @@ export const App = () => {
                 <ErrorMessage
                   name="favoriteColor"
                   component="div"
-                  className="field-error"
-                />
+                  className="input-feedback"
+                /> */}
               </div>
             </Fragment>)
             }
