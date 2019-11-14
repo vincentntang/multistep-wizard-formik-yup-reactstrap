@@ -2,6 +2,10 @@ import React, { Fragment } from "react";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import classnames from "classnames";
+import {AvField, AvForm} from 'availity-reactstrap-validation';
+import Select from 'react-select';
+// import 'react-select/dist/react-select.css';
+
 import {
   Row,
   Col,
@@ -164,6 +168,48 @@ class Wizard extends React.Component {
   }
 }
 
+// const options = [
+//   { value: "Food", label: "Food" },
+//   { value: "Being Fabulous", label: "Being Fabulous" },
+//   { value: "Ken Wheeler", label: "Ken Wheeler" },
+//   { value: "ReasonML", label: "ReasonML" },
+//   { value: "Unicorns", label: "Unicorns" },
+//   { value: "Kittens", label: "Kittens" }
+// ];
+
+// class MySelect extends React.Component {
+//   handleChange = value => {
+//     // this is going to call setFieldValue and manually update values.topcis
+//     this.props.onChange("topics", value);
+//   };
+
+//   handleBlur = () => {
+//     // this is going to call setFieldTouched and manually update touched.topcis
+//     this.props.onBlur("topics", true);
+//   };
+
+//   render() {
+//     return (
+//       <div style={{ margin: "1rem 0" }}>
+//         <label htmlFor="color">Topics (select at least 3) </label>
+//         <Select
+//           id="color"
+//           options={options}
+//           multi={true}
+//           onChange={this.handleChange}
+//           onBlur={this.handleBlur}
+//           value={this.props.value}
+//         />
+//         {!!this.props.error && this.props.touched && (
+//           <div style={{ color: "red", marginTop: ".5rem" }}>
+//             {this.props.error}
+//           </div>
+//         )}
+//       </div>
+//     );
+//   }
+// }
+
 const InputFeedback = ({ error }) =>
   error
     ? <div className="input-feedback">
@@ -218,7 +264,15 @@ const Step1Schema = Yup.object().shape({
   firstName: Yup.string().required("First Name Is Required"),
   middleName: Yup.string().required("Middle Name Is Required"),
   lastName: Yup.string().required("Last Name Is Required"),
-  sirName: Yup.string().required("Sir Name Is Required")
+  sirName: Yup.string().required("Sir Name Is Required"),
+  // topics: Yup.array()
+  //     .min(3, "Pick at least 3 tags")
+  //     .of(
+  //       Yup.object().shape({
+  //         label: Yup.string().required(),
+  //         value: Yup.string().required()
+  //       })
+  //     )
 });
 const Step2Schema = Yup.object().shape({
   email: Yup.string().required("Email Is Required"),
@@ -333,6 +387,17 @@ export const App = () => {
                         onBlur={props.handleBlur}
                       />
                     </FormGroup>
+                  </Col>
+                  <Col xs={{ size: 6, offset: 3 }}>
+                    {/* <FormGroup>
+                      <MySelect
+                        value={props.values.topics}
+                        onChange={props.setFieldValue}
+                        onBlur={props.setFieldTouched}
+                        error={props.errors.topics}
+                        touched={props.touched.topics}
+                      />
+                    </FormGroup> */}
                   </Col>
                 </Row>
                 {/* <Field
