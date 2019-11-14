@@ -87,6 +87,20 @@ class Wizard extends React.Component {
 
   // schemaArray = [this.Step1Schema, this.Step2Schema];
 
+  arrayProgress = [
+    {
+      title: "Certificate Request",
+      description: "Your company details & certificate options",
+    },
+    {
+      title: "Domain Verification",
+      description: "Show you have control of your domain",
+    },
+    {
+      title: "Complete",
+      description: "Process complete & next steps",
+    }
+  ]
   render() {
     const { children } = this.props;
     const { page, values } = this.state;
@@ -109,18 +123,14 @@ class Wizard extends React.Component {
             <form onSubmit={handleSubmit}>
               <div className="progressbar-wrapper">
                 <ol className="progressbar">
-                  <li className="active">
-                    <h2>Certificate Request</h2>
-                    <p className="text--size-small">Your company details & certificate options</p>
-                  </li>
-                  <li className="active">
-                    <h2>Domain Verification</h2>
-                    <p className="text--size-small">Show you have control of your domain</p>
-                  </li>
-                  <li>
-                    <h2>Complete</h2>
-                    <p className="text--size-small">Process complete & next steps</p>
-                  </li>
+                {this.arrayProgress.map((item,index) => {
+                  return (
+                    <li className={page >= index  ? "active" : ""}>
+                      <h2>{item.title}</h2>
+                      <p className="text--size-small">{item.description}</p>
+                    </li>
+                  )
+                })}
                 </ol>
               </div>
               {React.cloneElement(activePage, { parentState: { ...props } })}
