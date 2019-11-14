@@ -199,7 +199,7 @@ const Step1Schema = Yup.object().shape({
   firstName: Yup.string().required("First Name Is Required"),
   middleName: Yup.string().required("Middle Name Is Required"),
   sirName: Yup.string().required("Sir Name Is Required"),
-  favoriteColor: Yup.string().required('Pet is required')
+  favoritePet: Yup.string().required('Pet is required')
 });
 const Step2Schema = Yup.object().shape({
   email: Yup.string().required("Email Is Required"),
@@ -209,7 +209,7 @@ const initialValues = {
   firstName: "",
   middleName: "",
   sirName: '',
-  favoriteColor:'',
+  favoritePet:'',
   email: "",
   favoriteColor: "",
 };
@@ -287,12 +287,12 @@ export const App = () => {
                   <Col xs={{ size: 6, offset: 3 }}>
                     <FormGroup>
                       <div className="dropdown-wrapper">
-                        <Label>Favorite Color</Label>
+                        <Label>Favorite Pet</Label>
                         <Input tag={Field} name="favoritePet" component="select">
-                          <option value="">Select a Color</option>
-                          <option value="#ff0000">❤️ Red</option>
-                          <option value="#00ff00">💚 Green</option>
-                          <option value="#0000ff">💙 Blue</option>
+                          <option value="">Select a Pet</option>
+                          <option value="#ff0000">❤️ Dog</option>
+                          <option value="#00ff00">💚 Cat</option>
+                          <option value="#0000ff">💙 Mouse</option>
                         </Input>
                       </div>
                       <ErrorMessage
