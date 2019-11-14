@@ -213,9 +213,13 @@ ul.steps li.active, ul.steps li.active:before {
   counter-reset: step;
   width: 100%;
 }
+.progressbar {
+  display: flex;
+  justify-content: space-between;
+}
 .progressbar li {
   list-style-type: none;
-  float: left;
+  /* float: left; */
   /* display: flex;
   justify-content: space-between; */
   width: 33%;
