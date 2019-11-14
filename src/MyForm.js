@@ -109,9 +109,18 @@ class Wizard extends React.Component {
             <form onSubmit={handleSubmit}>
               <div className="progressbar-wrapper">
                 <ol className="progressbar">
-                  <li className="active">1</li>
-                  <li>3</li>
-                  <li>4</li>
+                  <li className="active">
+                    <h2>Certificate Request</h2>
+                    <p className="text--size-small">Your company details & certificate options</p>
+                  </li>
+                  <li className="active">
+                    <h2>Domain Verification</h2>
+                    <p className="text--size-small">Show you have control of your domain</p>
+                  </li>
+                  <li>
+                    <h2>Complete</h2>
+                    <p className="text--size-small">Process complete & next steps</p>
+                  </li>
                 </ol>
               </div>
               {React.cloneElement(activePage, { parentState: { ...props } })}

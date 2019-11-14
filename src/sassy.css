@@ -209,15 +209,68 @@ ul.steps li.active, ul.steps li.active:before {
 /* body {
   color: green;
 } */
+
+/** TYPOGRAPHY **/
+.text--size-large {
+  font-size: 17px;
+}
+
+.text--size-default {
+  font-size: 15px !important;
+  line-height: 1 !important;
+}
+
+.text--size-small {
+  font-size: 13px !important;
+  line-height: 1.5;
+}
+
+.text--size-xsmall {
+  font-size: 10px !important;
+  line-height: 1.5;
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 21px;
+  line-height: 28px;
+}
+
+h2 {
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 28px;
+  &.page-head {
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 28px;
+    letter-spacing: 0.1px;
+  }
+}
+
+h3 {
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 24px;
+}
+
+h4 {
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 20px;
+}
+
+/** PROGRESS BAR **/
 .progressbar-wrapper {
-  counter-reset: step;
   width: 100%;
 }
-.progressbar {
+ol.progressbar {
+  counter-reset: step;
   display: flex;
   justify-content: space-between;
+  padding-left: 0px;
 }
-.progressbar li {
+ol.progressbar li {
   list-style-type: none;
   /* float: left; */
   /* display: flex;
@@ -227,7 +280,7 @@ ul.steps li.active, ul.steps li.active:before {
   text-align: center;
 }
 
-.progressbar li:before {
+ol.progressbar li:before {
   content: counter(step);
   counter-increment: step;
   width: 30px;
@@ -240,7 +293,7 @@ ul.steps li.active, ul.steps li.active:before {
   border-radius: 50%;
   background-color: white;
 }
-.progressbar li:after {
+ol.progressbar li:after {
   content: '';
   position: absolute;
   width: 100%;
@@ -250,19 +303,19 @@ ul.steps li.active, ul.steps li.active:before {
   left:-50%;
   z-index: -1;
 }
-.progressbar li:first-child:after {
+ol.progressbar li:first-child:after {
   content: none;
 }
-.progressbar li.active {
+ol.progressbar li.active {
   color: green;
 }
-.progressbar li.active:before {
+ol.progressbar li.active:before {
   /* border-color: green; */
   background-color:green;
   color: white;
   border-color: green;
 }
 
-.progressbar li.active + li:after {
+ol.progressbar li.active + li:after {
   background-color: green;
 }
