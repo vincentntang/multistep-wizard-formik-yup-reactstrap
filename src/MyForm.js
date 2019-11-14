@@ -117,7 +117,6 @@ class Wizard extends React.Component {
         onSubmit={this.handleSubmit}
       >
         {props => {
-          console.log(props, "this.props");
           const { handleSubmit, isSubmitting } = props;
           return (
             <form onSubmit={handleSubmit}>
@@ -289,7 +288,7 @@ const TextInput = ({
 const Step1Schema = Yup.object().shape({
   firstName: Yup.string().required("First Name Is Required"),
   middleName: Yup.string().required("Middle Name Is Required"),
-  lastName: Yup.string().required("Last Name Is Required"),
+  // lastName: Yup.string().required("Last Name Is Required"),
   sirName: Yup.string().required("Sir Name Is Required"),
   favoritePet: Yup.string().required('Pet is required')
   // topics: Yup.array()
@@ -308,7 +307,7 @@ const Step2Schema = Yup.object().shape({
 const initialValues = {
   firstName: "",
   middleName: "", // must add
-  lastName: "",
+  // lastName: "",
   sirName: '',
   favoritePet:'',
   email: "",
@@ -467,7 +466,7 @@ export const App = () => {
             validate={required}
           /> */}
               </div>
-              <div>
+              {/* <div>
                 <label>Last Name</label>
                 <Field
                   name="lastName"
@@ -481,7 +480,7 @@ export const App = () => {
                   component="div"
                   className="field-error"
                 />
-              </div>
+              </div> */}
             </Fragment>)}
           }
         </Wizard.Page>
