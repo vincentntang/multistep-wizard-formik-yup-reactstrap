@@ -107,6 +107,13 @@ class Wizard extends React.Component {
           const { handleSubmit, isSubmitting } = props;
           return (
             <form onSubmit={handleSubmit}>
+              <div className="progressbar-wrapper">
+                <ol className="progressbar">
+                  <li className="active">1</li>
+                  <li>3</li>
+                  <li>4</li>
+                </ol>
+              </div>
               {React.cloneElement(activePage, { parentState: { ...props } })}
               {/* {activePage} */}
               <div className="buttons">
