@@ -7,6 +7,7 @@ npm run start
 
 ## Some notes below of everything I used to make this repo
 
+```
 /**
  * (some links may be broken since time of making this commenet block)
  * Formik, a 3rd party form library is used here
@@ -48,3 +49,4 @@ npm run start
  * If anything just reference the code here and my simpler base example with everything compiled here:
  * https://github.com/vincentntang/multistep-wizard-formik-yup-reactstrap
  */
+```
