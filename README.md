@@ -1,3 +1,14 @@
+## Intro
+
+This is an example of how of using Formik's base wizard multistep example. 
+
+Features
+
+- Yup validation library
+- Reactstrap integration examples
+
+https://codesandbox.io/s/formik-multiform-wizard-yup-reactstrap-ogfr2
+
 ## Installation
 
 ```
